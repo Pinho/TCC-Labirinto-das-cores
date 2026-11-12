@@ -1,0 +1,67 @@
+:root {
+    color-scheme: dark;
+    --theme-button-bg: #1e293b;
+    --theme-button-text: #f8fafc;
+    --theme-button-border: #334155;
+    --muted: #94a3b8;
+    --heading: #cbd5e1;
+    --input-bg: #000000;
+    --input-text: #00aa00;
+    --button-text: #ffffff;
+}
+
+[data-theme="light"] {
+    color-scheme: light;
+    --theme-button-bg: #ffffff;
+    --theme-button-text: #1e293b;
+    --theme-button-border: #cbd5e1;
+    --muted: #475569;
+    --heading: #334155;
+    --input-bg: #f8fafc;
+    --input-text: #0f172a;
+    --button-text: #ffffff;
+}
+
+.theme-toggle {
+    display: inline-flex;
+    width: 48px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--theme-button-border);
+    border-radius: 999px;
+    padding: 0;
+    color: var(--theme-button-text);
+    background: var(--theme-button-bg);
+    font: inherit;
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+    filter: brightness(1.1);
+    transform: scale(1.05);
+}
+
+.theme-toggle:focus-visible {
+    outline: 3px solid var(--accent, #38bdf8);
+    outline-offset: 2px;
+}
+
+.theme-icon {
+    display: none;
+}
+
+[data-theme="dark"] .theme-icon-sun,
+[data-theme="light"] .theme-icon-moon {
+    display: inline;
+}
+
+@media print {
+    .theme-toggle,
+    .site-nav {
+        display: none !important;
+    }
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labirinto das Cores - Dashboard Fuzzy & 3D</title>
+    <!-- Bibliotecas de Gráficos via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/theme.css">
+    <link rel="stylesheet" href="../assets/css/simulacao.css">
+</head>
+<body>
+
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a href="../index.html">Início</a>
+        <a href="simulacao.html" aria-current="page">Simulação</a>
+        <a href="analise-dados.html">Análise de dados</a>
+        <button class="theme-toggle" type="button" aria-label="Ativar modo claro" title="Ativar modo claro">
+            <span class="theme-icon theme-icon-moon" aria-hidden="true">&#9790;</span>
+            <span class="theme-icon theme-icon-sun" aria-hidden="true">&#9728;</span>
+        </button>
+    </nav>
+
+    <!-- SESSÃO DO CHEFE -->
+    <div class="boss-container">
+        <div class="speech-bubble" id="bossSpeech">
+            Aguardando inicialização do sistema Fuzzy Mamdani...
+        </div>
+        
+        <div class="boss-image-wrapper">
+            <svg viewBox="0 0 800 400" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+                <!-- Fundo -->
+                <rect x="100" y="50" width="600" height="200" fill="#87CEEB" />
+                <rect x="150" y="150" width="80" height="100" fill="#A9A9A9" />
+                <rect x="300" y="100" width="120" height="150" fill="#808080" />
+                <rect x="500" y="120" width="90" height="130" fill="#696969" />
+                <!-- Janela -->
+                <rect x="90" y="40" width="620" height="10" fill="#333" />
+                <rect x="90" y="240" width="620" height="10" fill="#333" />
+                <rect x="90" y="40" width="10" height="210" fill="#333" />
+                <rect x="700" y="40" width="10" height="210" fill="#333" />
+                <!-- Plantas -->
+                <rect x="40" y="320" width="80" height="80" fill="#f8fafc" rx="5" />
+                <path d="M 80 320 Q 50 250 20 280 Q 80 290 80 320" fill="#15803d" />
+                <path d="M 80 320 Q 80 220 100 240 Q 90 280 80 320" fill="#166534" />
+                <path d="M 80 320 Q 120 260 140 290 Q 100 300 80 320" fill="#14532d" />
+                <rect x="680" y="320" width="80" height="80" fill="#f8fafc" rx="5" />
+                <path d="M 720 320 Q 690 250 660 280 Q 720 290 720 320" fill="#15803d" />
+                <path d="M 720 320 Q 720 220 740 240 Q 730 280 720 320" fill="#166534" />
+                <path d="M 720 320 Q 760 260 780 290 Q 740 300 720 320" fill="#14532d" />
+                <!-- Chefe -->
+                <rect x="350" y="160" width="100" height="140" fill="#1a1a1a" rx="5" />
+                <rect x="340" y="220" width="120" height="80" fill="#262626" rx="5" />
+                <polygon points="380,220 420,220 400,260" fill="#ffffff" />
+                <polygon points="395,225 405,225 400,270" fill="#dc2626" />
+                <rect x="375" y="165" width="50" height="50" fill="#fcd34d" rx="4" />
+                <rect x="370" y="160" width="60" height="15" fill="#171717" rx="2" />
+                <rect x="385" y="185" width="6" height="6" fill="#000" />
+                <rect x="409" y="185" width="6" height="6" fill="#000" />
+                <rect x="390" y="200" width="20" height="3" fill="#000" />
+                <!-- Mesa e Detalhes -->
+                <rect x="150" y="280" width="500" height="120" fill="#92400e" />
+                <rect x="150" y="280" width="500" height="15" fill="#78350f" />
+                <rect x="395" y="295" width="10" height="105" fill="#78350f" />
+                <rect x="230" y="260" width="20" height="30" fill="#333" />
+                <rect x="200" y="190" width="80" height="70" fill="#1e3a8a" rx="3" />
+                <rect x="300" y="265" width="40" height="5" fill="#f8fafc" />
+                <rect x="302" y="260" width="40" height="5" fill="#e2e8f0" />
+                <rect x="298" y="255" width="40" height="5" fill="#f8fafc" />
+                <polygon points="490,280 550,280 535,240 495,240" fill="#cbd5e1" />
+                <polygon points="490,280 550,280 555,285 485,285" fill="#94a3b8" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- SESSÃO DO DASHBOARD -->
+    <div class="dashboard-grid">
+        
+        <!-- CONTROLES -->
+        <div class="panel">
+            <h3 class="panel-title">Variáveis do Jogador</h3>
+            
+            <!-- Agora com o limite de 23 salas -->
+            <div class="total-counter" id="totalCounter">Total de Placas: 0 / 23</div>
+
+            <div class="input-group">
+                <label>Visão Normal <span id="valN">19</span></label>
+                <input type="range" id="inNormal" value="19" min="0" max="23">
+            </div>
+            <div class="input-group">
+                <label>Daltônico Genérico <span id="valDalt">2</span></label>
+                <input type="range" id="inDalt" value="2" min="0" max="23">
+            </div>
+            <div class="input-group">
+                <label>Portas Deutan <span id="valDeutan">0</span></label>
+                <input type="range" id="inDeutan" value="0" min="0" max="4">
+            </div>
+            <div class="input-group">
+                <label>Portas Protan <span id="valProtan">2</span></label>
+                <input type="range" id="inProtan" value="2" min="0" max="4">
+            </div>
+            <div class="input-group">
+                <label>Erros Temporais (Consistência) <span id="valErro">0</span></label>
+                <input type="range" id="inErro" value="0" min="0" max="20">
+            </div>
+        </div>
+
+        <!-- GRÁFICOS E MÉTRICAS -->
+        <div class="panel panel-overflow">
+            <div class="results-grid">
+                <div class="metric-card">
+                    <div class="metric-title">Veredito Defuzzificado (AQ)</div>
+                    <div class="metric-value" id="outDiagnostico">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Consistência do Teste</div>
+                    <div class="metric-value" id="outConsistencia">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Classificação Clínica</div>
+                    <div class="metric-value" id="outTipo">-</div>
+                </div>
+            </div>
+
+            <!-- Gráficos 2D -->
+            <div class="charts-container">
+                <div class="chart-box">
+                    <canvas id="fuzzyChart"></canvas>
+                </div>
+                <div class="chart-box">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+
+            <h3 class="section-title">Superfícies de Decisão 3D (Motor Fuzzy Mamdani)</h3>
+            
+            <!-- Gráficos 3D (Plotly) originais restaurados -->
+            <div class="charts-container">
+                <div class="chart-box plotly-box" id="plotDeutan"></div>
+                <div class="chart-box plotly-box" id="plotConsistencia"></div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/simulacao.js"></script>
+</body>
+</html>

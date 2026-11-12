@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BI Analítico - Labirinto das Cores</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/theme.css">
+    <link rel="stylesheet" href="../assets/css/analise-dados.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Navegação principal">
+    <a href="../index.html">Início</a>
+    <a href="simulacao.html">Simulação</a>
+    <a href="analise-dados.html" aria-current="page">Análise de dados</a>
+    <button class="theme-toggle" type="button" aria-label="Ativar modo claro" title="Ativar modo claro">
+        <span class="theme-icon theme-icon-moon" aria-hidden="true">&#9790;</span>
+        <span class="theme-icon theme-icon-sun" aria-hidden="true">&#9728;</span>
+    </button>
+</nav>
+
+<div class="container">
+    <div class="header">
+        <h1>Centro de Inteligência Analítica (BI)</h1>
+        <p class="header-subtitle">Motor de Defuzzificação, Telemetria Espacial e Auditoria Temporal</p>
+    </div>
+
+    <!-- ENTRADA DE DADOS -->
+    <div class="input-section">
+        <p class="input-label">Cole o Output completo do Roblox Studio:</p>
+        <textarea id="csvInput" placeholder="O script fará a divisão inteligente entre testes de 12 e 24 salas (com tolerância a falhas de gatilho)..."></textarea>
+        <button id="processDataButton">Processar Telemetria</button>
+    </div>
+
+    <!-- KPIs GLOBAIS -->
+    <div class="kpi-grid is-hidden" id="kpiGrid">
+        <div class="kpi-card kpi-accent">
+            <div class="kpi-title">Testes Válidos Completos</div>
+            <div class="kpi-value" id="kpiTotal">-</div>
+        </div>
+        <div class="kpi-card kpi-success">
+            <div class="kpi-title">Tempo Médio do Grupo</div>
+            <div class="kpi-value kpi-value-success" id="kpiTempoGlobal">-</div>
+        </div>
+        <div class="kpi-card kpi-warning">
+            <div class="kpi-title">Casos Suspeitos (Dalt.)</div>
+            <div class="kpi-value kpi-value-warning" id="kpiAnomalias">-</div>
+        </div>
+        <div class="kpi-card kpi-danger">
+            <div class="kpi-title">Sessões Inconsistentes</div>
+            <div class="kpi-value kpi-value-danger" id="kpiInconsistentes">-</div>
+        </div>
+    </div>
+
+    <!-- SELETOR DE SESSÃO E AGRUPAMENTO -->
+    <div class="selector-section" id="selectorSection">
+        <label class="selector-label">Modo de Visualização e Filtro de Dados:</label>
+        <select id="runSelector"></select>
+    </div>
+
+    <!-- PAINÉIS DE GRÁFICOS -->
+    <div class="dashboard-grid" id="mainDashboard">
+        
+        <!-- Rota Espacial -->
+        <div class="chart-panel full-width">
+            <h3 class="section-title">
+                Mapa de Calor e Trajeto Espacial (Top-Down View)
+                <span class="badge" id="badgeMapa">GLOBAL</span>
+            </h3>
+            <div class="plotly-container" id="plotMapa"></div>
+        </div>
+
+        <!-- Estatísticas de Tempo -->
+        <div class="chart-panel full-width">
+            <h3 class="section-title">
+                Auditoria Cognitiva e Variação Temporal
+                <span class="badge" id="badgeTempo">GLOBAL</span>
+            </h3>
+            
+            <div class="mini-kpi-grid" id="painelTempos">
+                <div class="mini-kpi"><span>Tempo Total</span><strong id="tTotal">-</strong></div>
+                <div class="mini-kpi"><span>Média por Fase</span><strong id="tMedia">-</strong></div>
+                <div class="mini-kpi"><span>Desvio Padrão (Variação)</span><strong id="tDesvio" class="highlight-purple">-</strong></div>
+                <div class="mini-kpi"><span>Fase Mais Lenta (Hesitação)</span><strong id="tLenta" class="highlight-red">-</strong></div>
+                <div class="mini-kpi"><span>Fase Mais Rápida</span><strong id="tRapida" class="highlight-green">-</strong></div>
+            </div>
+
+            <div class="chart-container"><canvas id="chartTempos"></canvas></div>
+        </div>
+
+        <!-- Matriz Fuzzy -->
+        <div class="chart-panel fuzzy-panel">
+            <h3 class="section-title">
+                Assinatura Diagnóstica Fuzzy (Média do Grupo)
+                <span class="badge" id="badgeFuzzy">GLOBAL</span>
+            </h3>
+            <div class="chart-container"><canvas id="chartFuzzy"></canvas></div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/analise-dados.js"></script>
+</body>
+</html>
